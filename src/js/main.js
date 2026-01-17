@@ -7,5 +7,10 @@ const element = document.querySelector(".product-list");
 // Only display products that have detail pages
 const productIdsWithDetailPages = ["880RR", "985RF", "985PR", "344YJ"];
 
-const productList = new ProductList("Tents", dataSource, element, productIdsWithDetailPages);
+const productList = new ProductList(
+  "Tents",
+  dataSource,
+  element,
+  productIdsWithDetailPages,
+);
 productList.init();
