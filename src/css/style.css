@@ -233,6 +233,23 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  position: relative;
+}
+
+.cart-card__remove {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--dark-grey);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.25em;
+}
+
+.cart-card__remove:hover {
+  color: var(--tertiary-color);
 }
 
 .cart-card__image {
