@@ -378,3 +378,61 @@ footer {
     max-width: 700px;
   }
 }
+
+/* --- Home Page Category Styles --- */
+
+/* Styles the main H1 heading */
+.section-title {
+  text-align: center;
+  font-family: var(--font-headline);
+  font-size: 2.5rem; /* Large size for the main page title */
+  margin: 2rem 0;
+  color: var(--dark-grey);
+}
+
+/* Container for the 4 icons - uses Flexbox to center them */
+.product-grid {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Space between icons on mobile */
+  padding: 0;
+  margin-bottom: 3rem;
+}
+
+/* Limits the width of each category link */
+.product-grid li {
+  text-align: center;
+  width: 150px; 
+}
+
+/* The magic fix for the massive SVG icons */
+.product-grid img {
+  width: 100%;
+  max-width: 120px; /* Forces icons to stay small */
+  height: auto;
+  margin: 0 auto 15px; /* Bottom margin pushes text away from image */
+  display: block;
+}
+
+/* Removes blue underline from links */
+.product-grid a {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+/* Styles the names: Tents, Backpacks, etc. */
+.product-grid h2 {
+  font-family: var(--font-headline);
+  font-size: 1.1rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* Tablet and Desktop: spreads icons out more */
+@media screen and (min-width: 768px) {
+  .product-grid {
+    gap: 60px;
+  }
+}

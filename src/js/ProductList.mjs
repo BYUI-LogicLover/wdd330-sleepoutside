@@ -1,42 +1,29 @@
-import { renderListWithTemplate } from './utils.mjs';
+import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
-  const isDiscounted = product.FinalPrice < product.SuggestedRetailPrice;
-  const discountPercent = isDiscounted
-    ? Math.round((1 - product.FinalPrice / product.SuggestedRetailPrice) * 100)
-    : 0;
-
   return `
     <li class="product-card">
-      <a href="product_pages/?product=${product.Id}">
-        ${isDiscounted ? `<span class="product-card__discount-badge">${discountPercent}% OFF</span>` : ''}
-        <img src="${product.Images?.PrimaryMedium || product.Image}" alt="${product.Name}">
-        <h2>${product.Brand.Name}</h2>
-        <h3>${product.NameWithoutBrand}</h3>
-        <p class="product-card__price">
-          ${isDiscounted ? `<span class="product-card__original-price">$${product.SuggestedRetailPrice.toFixed(2)}</span>` : ''}
-          $${product.FinalPrice}
-        </p>
+      <a href="/product_pages/?product=${product.Id}">
+        <img src="${product.Images.PrimaryMedium}" alt="${product.Name}">
+        <h3>${product.Brand.Name}</h3>
+        <p>${product.NameWithoutBrand}</p>
+        <p class="product-card__price">$${product.FinalPrice}</p>
       </a>
     </li>
     `;
 }
 
 export default class ProductList {
-  constructor(category, dataSource, listElement, filterIds = null) {
+  constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
-    this.filterIds = filterIds;
   }
 
   async init() {
     const list = await this.dataSource.getData(this.category);
-    let filteredList = list;
-    if (this.filterIds) {
-      filteredList = list.filter((product) => this.filterIds.includes(product.Id));
-    }
-    this.renderList(filteredList);
+    this.renderList(list);
+    document.querySelector(".title").textContent = this.category;
   }
 
   renderList(list) {
