@@ -10,7 +10,7 @@ function productCardTemplate(product) {
     <li class="product-card">
       <a href="product_pages/?product=${product.Id}">
         ${isDiscounted ? `<span class="product-card__discount-badge">${discountPercent}% OFF</span>` : ''}
-        <img src="${product.Image}" alt="${product.Name}">
+        <img src="${product.Images?.PrimaryMedium || product.Image}" alt="${product.Name}">
         <h2>${product.Brand.Name}</h2>
         <h3>${product.NameWithoutBrand}</h3>
         <p class="product-card__price">
@@ -31,11 +31,12 @@ export default class ProductList {
   }
 
   async init() {
-    let list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
+    let filteredList = list;
     if (this.filterIds) {
-      list = list.filter((product) => this.filterIds.includes(product.Id));
+      filteredList = list.filter((product) => this.filterIds.includes(product.Id));
     }
-    this.renderList(list);
+    this.renderList(filteredList);
   }
 
   renderList(list) {
