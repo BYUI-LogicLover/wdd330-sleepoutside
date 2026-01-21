@@ -90,7 +90,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -319,4 +319,70 @@ footer {
   color: #999;
   font-size: 0.9em;
   margin-right: 0.5em;
+}
+
+/* Product Image Size Fixes - Responsive sizing based on screen size */
+
+/* Mobile: Product list and card images */
+.product-list img,
+.product-card img {
+  width: 100%;
+  max-width: 300px;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
+/* Product detail page image */
+.product-detail img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Ensure images don't overflow their containers */
+.product-card__image,
+.cart-card__image {
+  display: block;
+  overflow: hidden;
+}
+
+/* Cart card images - smaller size for cart */
+.cart-card__image img {
+  width: 100%;
+  max-width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Tablet and larger screens - adjust product card image size */
+@media screen and (min-width: 768px) {
+
+  .product-list img,
+  .product-card img {
+    max-width: 350px;
+    height: 280px;
+  }
+
+  .product-detail img {
+    max-width: 600px;
+  }
+}
+
+/* Desktop screens - larger product images */
+@media screen and (min-width: 1080px) {
+
+  .product-list img,
+  .product-card img {
+    max-width: 400px;
+    height: 320px;
+  }
+
+  .product-detail img {
+    max-width: 700px;
+  }
 }
