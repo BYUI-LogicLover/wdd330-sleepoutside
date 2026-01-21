@@ -40,7 +40,7 @@ function productDetailsTemplate(product) {
 
   // Update product image - use Images.PrimaryLarge instead of Image
   const productImage = document.getElementById("productImage");
-  productImage.src = product.Image;
+  productImage.src = product.Images?.PrimaryLarge || product.Image;
   productImage.alt = product.NameWithoutBrand;
 
   // Update price with discount display

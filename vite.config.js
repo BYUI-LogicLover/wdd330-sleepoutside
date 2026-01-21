@@ -11,6 +11,7 @@ export default defineConfig({
         main: resolve(__dirname, 'src/index.html'),
         cart: resolve(__dirname, 'src/cart/index.html'),
         checkout: resolve(__dirname, 'src/checkout/index.html'),
+        'product-listing': resolve(__dirname, 'src/product_listing/index.html'),
         product: resolve(__dirname, 'src/product_pages/index.html'),
         'product-northface-alpine': resolve(__dirname, 'src/product_pages/northface-alpine-3.html'),
         'product-marmot-ajax': resolve(__dirname, 'src/product_pages/marmot-ajax-3.html'),

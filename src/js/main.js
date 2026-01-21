@@ -1,7 +1,13 @@
 import ProductData from './ProductData.mjs';
 import ProductList from './ProductList.mjs';
+import { loadHeaderFooter } from './utils.mjs';
 
-const dataSource = new ProductData('tents');
+loadHeaderFooter({
+  header: '/partials/header.html',
+  footer: '/partials/footer.html'
+});
+
+const dataSource = new ProductData();
 const element = document.querySelector('.product-list');
 
 // Only display products that have detail pages
@@ -14,15 +20,3 @@ const productList = new ProductList(
   productIdsWithDetailPages,
 );
 productList.init();
-
-fetch('/partials/header.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('header').innerHTML = data;
-  });
-
-fetch('/partials/footer.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('footer').innerHTML = data;
-  });
