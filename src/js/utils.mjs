@@ -15,26 +15,54 @@ export function setLocalStorage(key, data) {
 }
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
+  qs(selector).addEventListener('touchend', (event) => {
     event.preventDefault();
     callback();
   });
-  qs(selector).addEventListener("click", callback);
+  qs(selector).addEventListener('click', callback);
 }
 
 // get the product id from the query string
 export function getParam(param) {
-  const queryString = window.location.search;
+  const queryString = this.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param);
-  return product
+  return urlParams.get(param);
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+export function renderListWithTemplate(template, parentElement, list, position = 'afterbegin', clear = false) {
   const htmlStrings = list.map(template);
   // if clear is true we need to clear out the contents of the parent.
   if (clear) {
-    parentElement.innerHTML = "";
+    parentElement.innerHTML = '';
   }
-  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+}
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  const htmlStrings = data.map(template);
+  if (callback) {
+    callback();
+  }
+  parentElement.insertAdjacentHTML('afterbegin', htmlStrings.join(''));
+}
+
+export function loadTemplate(path) {
+  return fetch(path)
+    .then((response) => response.text())
+    .then((templateString) => templateString);
+}
+
+export function loadHeaderFooter(paths) {
+  const headerPromise = fetch(paths.header)
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById('header').innerHTML = data;
+
+    });
+  const footerPromise = fetch(paths.footer)
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById('footer').innerHTML = data;
+    });
+  return Promise.all([headerPromise, footerPromise]);
 }

@@ -1,13 +1,13 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from './utils.mjs';
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  const cartItems = getLocalStorage('so-cart') || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  document.querySelector('.product-list').innerHTML = htmlItems.join('');
 
   // Add event listeners to remove buttons
-  document.querySelectorAll(".cart-card__remove").forEach((button) => {
-    button.addEventListener("click", removeFromCart);
+  document.querySelectorAll('.cart-card__remove').forEach((button) => {
+    button.addEventListener('click', removeFromCart);
   });
 }
 
@@ -33,13 +33,25 @@ function cartItemTemplate(item) {
 
 function removeFromCart(e) {
   const productId = e.target.dataset.id;
-  let cartItems = getLocalStorage("so-cart");
+  let cartItems = getLocalStorage('so-cart') || [];
   const index = cartItems.findIndex((item) => item.Id === productId);
   if (index !== -1) {
     cartItems.splice(index, 1);
   }
-  setLocalStorage("so-cart", cartItems);
+  setLocalStorage('so-cart', cartItems);
   renderCartContents();
 }
+
+fetch('/partials/header.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('header').innerHTML = data;
+  });
+
+fetch('/partials/footer.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('footer').innerHTML = data;
+  });
 
 renderCartContents();
