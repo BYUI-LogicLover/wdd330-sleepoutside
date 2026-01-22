@@ -3,8 +3,8 @@ import ProductList from "./ProductList.mjs";
 import { loadHeaderFooter, getParam } from "./utils.mjs";
 
 loadHeaderFooter({
-  header: "../partials/header.html",  // ← Fixed path
-  footer: "../partials/footer.html",  // ← Fixed path
+  header: "../partials/header.html", // ← Fixed path
+  footer: "../partials/footer.html", // ← Fixed path
 });
 
 const category = getParam("category");

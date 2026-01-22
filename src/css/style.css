@@ -404,7 +404,7 @@ footer {
 /* Limits the width of each category link */
 .product-grid li {
   text-align: center;
-  width: 150px; 
+  width: 150px;
 }
 
 /* The magic fix for the massive SVG icons */
