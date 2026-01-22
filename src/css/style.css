@@ -130,6 +130,26 @@ button {
   fill: gray;
 }
 
+.cart-count {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  background-color: var(--tertiary-color);
+  color: white;
+  font-size: 0.7em;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  display: none;
+}
+
+.cart-count.has-items {
+  display: block;
+}
+
 /* End cart icon styles */
 
 .mission {

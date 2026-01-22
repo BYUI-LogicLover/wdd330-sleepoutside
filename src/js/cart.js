@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
@@ -40,12 +40,14 @@ function removeFromCart(e) {
   }
   setLocalStorage("so-cart", cartItems);
   renderCartContents();
+  updateCartCount();
 }
 
 fetch("/partials/header.html")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("header").innerHTML = data;
+    updateCartCount();
   });
 
 fetch("/partials/footer.html")
