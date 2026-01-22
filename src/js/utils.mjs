@@ -57,7 +57,7 @@ export function loadHeaderFooter(paths) {
     .then((response) => response.text())
     .then((data) => {
       document.getElementById('header').innerHTML = data;
-
+      updateCartCount();
     });
   const footerPromise = fetch(paths.footer)
     .then((response) => response.text())
@@ -65,4 +65,18 @@ export function loadHeaderFooter(paths) {
       document.getElementById('footer').innerHTML = data;
     });
   return Promise.all([headerPromise, footerPromise]);
+}
+
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const countElement = document.getElementById("cart-count");
+  if (countElement) {
+    const count = cartItems.length;
+    countElement.textContent = count;
+    if (count > 0) {
+      countElement.classList.add("has-items");
+    } else {
+      countElement.classList.remove("has-items");
+    }
+  }
 }
