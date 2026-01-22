@@ -55,21 +55,31 @@ export function loadTemplate(path) {
     .then((templateString) => templateString);
 }
 
-export async function loadHeaderFooter(paths) {
-  const headerPath = paths?.header || "/partials/header.html";
-  const footerPath = paths?.footer || "/partials/footer.html";
-  
-  const headerTemplate = await loadTemplate(headerPath);
-  const footerTemplate = await loadTemplate(footerPath);
+export function loadHeaderFooter(paths) {
+  const headerPromise = fetch(paths.header)
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById('header').innerHTML = data;
+      updateCartCount();
+    });
+  const footerPromise = fetch(paths.footer)
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById('footer').innerHTML = data;
+    });
+  return Promise.all([headerPromise, footerPromise]);
+}
 
-  const headerElement = document.getElementById("header");
-  const footerElement = document.getElementById("footer");
-
-  if (headerElement) {
-    headerElement.innerHTML = headerTemplate;
-  }
-  
-  if (footerElement) {
-    footerElement.innerHTML = footerTemplate;
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const countElement = document.getElementById("cart-count");
+  if (countElement) {
+    const count = cartItems.length;
+    countElement.textContent = count;
+    if (count > 0) {
+      countElement.classList.add("has-items");
+    } else {
+      countElement.classList.remove("has-items");
+    }
   }
 }
