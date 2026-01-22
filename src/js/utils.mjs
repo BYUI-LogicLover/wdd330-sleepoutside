@@ -1,44 +1,47 @@
-// wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-// save data to local storage
+
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+
 export function setClick(selector, callback) {
-  qs(selector).addEventListener('touchend', (event) => {
-    event.preventDefault();
-    callback();
-  });
-  qs(selector).addEventListener('click', callback);
+  const element = qs(selector);
+  if (element) {
+    element.addEventListener('touchend', (event) => {
+      event.preventDefault();
+      callback();
+    });
+    element.addEventListener('click', callback);
+  }
 }
 
-// get the product id from the query string
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param);
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = 'afterbegin', clear = false) {
-  const htmlStrings = list.map(template);
-  // if clear is true we need to clear out the contents of the parent.
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+  if (!parentElement) return;
+
+  const htmlStrings = list.map(templateFn);
+  
   if (clear) {
     parentElement.innerHTML = '';
   }
+  
   parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
 
 export function renderWithTemplate(template, parentElement, data, callback) {
+  if (!parentElement) return;
+
   const htmlStrings = data.map(template);
   if (callback) {
     callback();
@@ -52,17 +55,21 @@ export function loadTemplate(path) {
     .then((templateString) => templateString);
 }
 
-export function loadHeaderFooter(paths) {
-  const headerPromise = fetch(paths.header)
-    .then((response) => response.text())
-    .then((data) => {
-      document.getElementById('header').innerHTML = data;
+export async function loadHeaderFooter(paths) {
+  const headerPath = paths?.header || "/partials/header.html";
+  const footerPath = paths?.footer || "/partials/footer.html";
+  
+  const headerTemplate = await loadTemplate(headerPath);
+  const footerTemplate = await loadTemplate(footerPath);
 
-    });
-  const footerPromise = fetch(paths.footer)
-    .then((response) => response.text())
-    .then((data) => {
-      document.getElementById('footer').innerHTML = data;
-    });
-  return Promise.all([headerPromise, footerPromise]);
+  const headerElement = document.getElementById("header");
+  const footerElement = document.getElementById("footer");
+
+  if (headerElement) {
+    headerElement.innerHTML = headerTemplate;
+  }
+  
+  if (footerElement) {
+    footerElement.innerHTML = footerTemplate;
+  }
 }
