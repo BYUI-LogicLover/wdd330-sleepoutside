@@ -1,7 +1,8 @@
-import { getLocalStorage } from './utils.mjs';
+import { getLocalStorage, setLocalStorage, updateCartCount } from './utils.mjs';
 
 function cartItemTemplate(item) {
   return `<li class="cart-card divider">
+  <span class="cart-card__remove" data-id="${item.Id}">X</span>
   <a href="#" class="cart-card__image">
     <img src="${item.Images.PrimaryMedium}" alt="${item.Name}" />
   </a>
@@ -39,6 +40,27 @@ export default class ShoppingCart {
 
     // Calculate and display total
     this.calculateTotal(cartItems);
+
+    // Add event listeners to remove buttons
+    this.addRemoveListeners();
+  }
+
+  addRemoveListeners() {
+    document.querySelectorAll(".cart-card__remove").forEach((button) => {
+      button.addEventListener("click", (e) => this.removeFromCart(e));
+    });
+  }
+
+  removeFromCart(e) {
+    const productId = e.target.dataset.id;
+    let cartItems = getLocalStorage(this.key) || [];
+    const index = cartItems.findIndex((item) => item.Id === productId);
+    if (index !== -1) {
+      cartItems.splice(index, 1);
+    }
+    setLocalStorage(this.key, cartItems);
+    this.renderCartContents();
+    updateCartCount();
   }
 
   calculateTotal(items) {
