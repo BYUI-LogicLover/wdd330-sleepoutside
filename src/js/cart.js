@@ -1,10 +1,11 @@
+import { loadHeaderFooter } from "./utils.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
 import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
-function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart") || [];
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+loadHeaderFooter();
 
+const cart = new ShoppingCart("so-cart", ".product-list");
+cart.renderCartContents();
   // Add event listeners to remove buttons
   document.querySelectorAll(".cart-card__remove").forEach((button) => {
     button.addEventListener("click", removeFromCart);

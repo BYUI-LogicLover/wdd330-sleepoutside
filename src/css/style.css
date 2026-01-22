@@ -424,7 +424,7 @@ footer {
 /* Limits the width of each category link */
 .product-grid li {
   text-align: center;
-  width: 150px; 
+  width: 150px;
 }
 
 /* The magic fix for the massive SVG icons */
@@ -455,4 +455,22 @@ footer {
   .product-grid {
     gap: 60px;
   }
+}
+
+/* Cart total styling */
+.cart-footer {
+  text-align: right;
+  padding: 1em;
+  margin-top: 1em;
+  border-top: 2px solid #333;
+}
+
+.cart-total {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.hide {
+  display: none;
 }
