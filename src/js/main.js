@@ -1,5 +1,5 @@
 import Alert from './alert.js';
-import ProductData from './ProductData.mjs';
+import ExternalServices from './ExternalServices.mjs';
 import ProductList from './ProductList.mjs';
 import { loadHeaderFooter } from './utils.mjs';
 
@@ -11,7 +11,7 @@ loadHeaderFooter({
 const alerts = new Alert();
 alerts.init();
 
-const dataSource = new ProductData();
+const dataSource = new ExternalServices();
 const element = document.querySelector(".product-list");
 
 // Only display products that have detail pages

@@ -8,15 +8,65 @@
 
     <title>Sleep Outside | Checkout</title>
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <script src="../js/checkout.js" type="module"></script>
   </head>
 
   <body>
     <header id="header"></header>
 
     <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
+      <section class="checkout">
+        <h2>Checkout</h2>
+
+        <form id="checkout-form">
+          <fieldset>
+            <legend>Customer Information</legend>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required />
+
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required />
+          </fieldset>
+
+          <fieldset>
+            <legend>Shipping Address</legend>
+            <label for="street">Street Address</label>
+            <input type="text" id="street" name="street" required />
+
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required />
+
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" required />
+
+            <label for="zip">Zip Code</label>
+            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" required />
+          </fieldset>
+
+          <fieldset>
+            <legend>Payment Information</legend>
+            <label for="cardNumber">Credit Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" pattern="[0-9]{16}" required />
+
+            <label for="expiration">Expiration Date</label>
+            <input type="text" id="expiration" name="expiration" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" required />
+
+            <label for="code">Security Code</label>
+            <input type="text" id="code" name="code" pattern="[0-9]{3,4}" required />
+          </fieldset>
+
+          <button type="submit" id="checkout-btn">Checkout</button>
+        </form>
+
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <p>Subtotal: <span id="subtotal">$0.00</span></p>
+          <p>Tax: <span id="tax">$0.00</span></p>
+          <p>Shipping: <span id="shipping">$0.00</span></p>
+          <p class="order-total">Order Total: <span id="orderTotal">$0.00</span></p>
+        </div>
       </section>
     </main>
 
