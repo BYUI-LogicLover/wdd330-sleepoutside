@@ -1,11 +1,15 @@
-import ProductData from "./ProductData.mjs";
-import ProductList from "./ProductList.mjs";
-import { loadHeaderFooter } from "./utils.mjs";
+import Alert from './alert.js';
+import ProductData from './ProductData.mjs';
+import ProductList from './ProductList.mjs';
+import { loadHeaderFooter } from './utils.mjs';
 
 loadHeaderFooter({
-  header: "/partials/header.html",
-  footer: "/partials/footer.html",
+  header: '/partials/header.html',
+  footer: '/partials/footer.html',
 });
+
+const alerts = new Alert();
+alerts.init();
 
 const dataSource = new ProductData();
 const element = document.querySelector(".product-list");
