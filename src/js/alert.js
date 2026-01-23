@@ -19,18 +19,30 @@ export default class Alert {
   }
 
   renderAlerts(alerts) {
-    const section = document.createElement('section');
-    section.className = 'alert-list';
+    try {
+      const section = document.createElement('section');
+      section.className = 'alert-list';
 
-    alerts.forEach((alert) => {
-      const p = document.createElement('p');
-      p.textContent = alert.message;
-      p.style.backgroundColor = alert.background;
-      p.style.color = alert.color;
-      section.appendChild(p);
-    });
+      alerts.forEach((alert) => {
+        const p = document.createElement('p');
+        p.textContent = alert.message;
+        p.style.backgroundColor = alert.background;
+        p.style.color = alert.color;
+        section.appendChild(p);
+      });
 
-    const main = document.querySelector('main');
-    main.prepend(section);
+      const main = document.querySelector('main');
+
+      // Check if main exists before trying to prepend to it
+      if (main) {
+        main.prepend(section);
+      } else {
+        throw new Error(
+          'Could not find the <main> element on this page. Check your HTML!',
+        );
+      }
+    } catch (error) {
+      console.error('Alert Component Error:', error.message);
+    }
   }
 }
