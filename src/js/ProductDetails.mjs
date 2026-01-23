@@ -18,6 +18,12 @@ export default class ProductDetails {
       if (addButton) {
         addButton.addEventListener("click", this.addProductToCart.bind(this));
       }
+
+      // Add to Wishlist Listener
+      const wishlistButton = document.getElementById("add-to-wishlist");
+      if (wishlistButton) {
+        wishlistButton.addEventListener("click", this.addProductToWishlist.bind(this));
+      }
     }
   }
 
@@ -28,11 +34,28 @@ export default class ProductDetails {
     updateCartCount();
   }
 
+  // Wishlist Method
+  addProductToWishlist() {
+    const wishlistItems = getLocalStorage("so-wishlist") || [];
+    
+    // Check if item is already in wishlist to prevent duplicates
+    const exists = wishlistItems.find((item) => item.Id === this.product.Id);
+    
+    if (!exists) {
+      wishlistItems.push(this.product);
+      setLocalStorage("so-wishlist", wishlistItems);
+      alert(`${this.product.NameWithoutBrand} added to wishlist!`);
+    } else {
+      alert("This item is already in your wishlist.");
+    }
+  }
+
   renderProductDetails() {
     // Pass the product to the template function
     productDetailsTemplate(this.product);
   }
 }
+
 
 function productDetailsTemplate(product) {
   // Use safety checks (optional chaining or if statements) for every element
@@ -69,6 +92,10 @@ function productDetailsTemplate(product) {
 
   const addButton = document.querySelector("#add-to-cart");
   if (addButton) addButton.dataset.id = product.Id;
+
+
+  const wishlistBtn = document.querySelector("#add-to-wishlist");
+  if (wishlistBtn) wishlistBtn.dataset.id = product.Id;
 }
 
 // ************* Alternative Display Product Details Method *******************

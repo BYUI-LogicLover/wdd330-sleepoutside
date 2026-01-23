@@ -474,3 +474,31 @@ footer {
 .hide {
   display: none;
 }
+
+/* Container for the buttons */
+.product-detail__add {
+  display: flex;
+  flex-direction: column; /* Stacks buttons vertically on mobile */
+  gap: 10px;              /* Adds space between the buttons */
+  padding: 1rem 0;
+  max-width: 100%;
+}
+
+/* Ensure buttons take full width when stacked */
+.product-detail__add button {
+  width: 100%;
+  margin: 0; /* Overrides your global 'margin: auto' to prevent weird spacing */
+}
+
+/* Tablet and Desktop: Side-by-Side */
+@media screen and (min-width: 500px) {
+  .product-detail__add {
+    flex-direction: row; /* Aligns buttons horizontally */
+    justify-content: center;
+  }
+
+  .product-detail__add button {
+    flex: 1; /* Makes both buttons the same width */
+    max-width: 200px; /* Optional: prevents buttons from getting too wide */
+  }
+}
