@@ -98,3 +98,29 @@ export function formDataToJSON(formElement) {
 
   return convertedJSON;
 }
+
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector('main');
+  if (!main) return;
+
+  const alert = document.createElement('div');
+  alert.classList.add('alert');
+  alert.innerHTML = `<p>${message}</p><span class="alert-close">X</span>`;
+
+  alert.addEventListener('click', function (e) {
+    if (e.target.classList.contains('alert-close')) {
+      main.removeChild(this);
+    }
+  });
+
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}
+
+export function removeAllAlerts() {
+  const alerts = document.querySelectorAll('.alert');
+  alerts.forEach(alert => alert.remove());
+}

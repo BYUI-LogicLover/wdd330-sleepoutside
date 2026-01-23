@@ -113,6 +113,36 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
+/* Alert message styles */
+.alert {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert p {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.alert-close {
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.alert-close:hover {
+  color: #000;
+}
+
 /* End utility classes */
 
 /* Cart icon styles */

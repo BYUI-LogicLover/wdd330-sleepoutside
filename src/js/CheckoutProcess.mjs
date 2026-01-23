@@ -61,8 +61,12 @@ export default class CheckoutProcess {
     order.shipping = this.shipping;
     order.items = this.packageItems(this.cartItems);
 
-    // Send the order to the server
-    const response = await externalServices.checkout(order);
-    return response;
+    try {
+      // Send the order to the server
+      const response = await externalServices.checkout(order);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 }
