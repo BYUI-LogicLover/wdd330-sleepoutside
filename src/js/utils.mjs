@@ -63,13 +63,13 @@ export function loadHeaderFooter(paths) {
   const headerPromise = fetch(paths.header)
     .then((response) => response.text())
     .then((data) => {
-      document.getElementById('header').innerHTML = data;
+      document.getElementById('main-header').innerHTML = data;
       updateCartCount();
     });
   const footerPromise = fetch(paths.footer)
     .then((response) => response.text())
     .then((data) => {
-      document.getElementById('footer').innerHTML = data;
+      document.getElementById('main-footer').innerHTML = data;
     });
   return Promise.all([headerPromise, footerPromise]);
 }
@@ -97,4 +97,21 @@ export function formDataToJSON(formElement) {
   });
 
   return convertedJSON;
+}
+
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement('div');
+  alert.classList.add('alert');
+  alert.innerHTML = `<p>${message}</p><span class="alert-close">X</span>`;
+  
+  const main = document.querySelector('main');
+  main.prepend(alert);
+  
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+  
+  alert.querySelector('.alert-close').addEventListener('click', () => {
+    alert.remove();
+  });
 }
