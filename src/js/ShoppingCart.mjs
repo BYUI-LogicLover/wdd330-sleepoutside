@@ -1,6 +1,6 @@
 import { getLocalStorage, setLocalStorage, updateCartCount } from './utils.mjs';
 
-function cartItemTemplate(item) {
+function cartItemTemplate(item, listType) {
   return `<li class="cart-card divider">
   <span class="cart-card__remove" data-id="${item.Id}">X</span>
   <a href="#" class="cart-card__image">
@@ -12,6 +12,7 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  ${listType === 'so-wishlist' ? `<button class="move-to-cart-btn" data-id="${item.Id}">Move to Cart</button>` : ''}
 </li>`;
 }
 
@@ -61,6 +62,30 @@ export default class ShoppingCart {
     setLocalStorage(this.key, cartItems);
     this.renderCartContents();
     updateCartCount();
+  }
+
+  // Move stuff from wishlist to cart
+  moveItemToCart(e) {
+    const productId = e.target.dataset.id;
+    let wishlistItems = getLocalStorage("so-wishlist") || [];
+    let cartItems = getLocalStorage("so-cart") || [];
+
+    const index = wishlistItems.findIndex((item) => item.Id === productId);
+    if (index !== -1) {
+      const itemToMove = wishlistItems[index];
+      
+      // 1. Add to cart
+      cartItems.push(itemToMove);
+      // 2. Remove from wishlist
+      wishlistItems.splice(index, 1);
+
+      // 3. Update both storage keys
+      setLocalStorage("so-cart", cartItems);
+      setLocalStorage("so-wishlist", wishlistItems);
+
+      // 4. Force a reload to refresh both lists on the page
+      location.reload();
+    }
   }
 
   calculateTotal(items) {
